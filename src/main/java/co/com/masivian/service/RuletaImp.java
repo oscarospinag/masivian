@@ -17,8 +17,12 @@ public class RuletaImp implements RuletaService {
 	@Autowired
 	private RuletaRepository repository;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see co.com.masivian.service.RuletaService#all()
+	 * 
+	 * Method to List the roulettes
 	 */
 	@Override
 	public List<RuletaDto> all() {
@@ -26,12 +30,12 @@ public class RuletaImp implements RuletaService {
 		List<Ruleta> entities = (List<Ruleta>) repository.findAll();
 		if (entities != null && entities.size() > 0) {
 			response = new ArrayList<>();
-			for(Ruleta entity : entities) {
+			for (Ruleta entity : entities) {
 				RuletaDto dto = new RuletaDto();
 				List<ApuestaDto> dtoruleta = null;
-				if(entity.getApuestaList() !=null && !entity.getApuestaList().isEmpty()) {
+				if (entity.getApuestaList() != null && !entity.getApuestaList().isEmpty()) {
 					dtoruleta = new ArrayList<>();
-					for(Apuesta list :entity.getApuestaList()) {
+					for (Apuesta list : entity.getApuestaList()) {
 						ApuestaDto dtolista = new ApuestaDto();
 						dtolista.setId(list.getId());
 						dtolista.setValue(list.getValue());
@@ -43,15 +47,24 @@ public class RuletaImp implements RuletaService {
 				dto.setName(entity.getName());
 				dto.setStatus(entity.getStatus());
 				response.add(dto);
-				
+
 			}
 		}
+		
 		return response;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.masivian.service.RuletaService#save(co.com.masivian.Dto.RuletaDto)
+	 * 
+	 * method to record a roulette
+	 */
 	@Override
 	public RuletaDto save(RuletaDto ruletaDto) {
-		Ruleta ruleta= new Ruleta();
+		Ruleta ruleta = new Ruleta();
 		ruleta.setId(ruletaDto.getId());
 		ruleta.setName(ruletaDto.getName());
 		ruleta.setStatus(ruletaDto.getStatus());
@@ -60,44 +73,66 @@ public class RuletaImp implements RuletaService {
 		dto.setId(entityDB.getId());
 		dto.setName(entityDB.getName());
 		dto.setStatus(entityDB.getStatus());
+		
 		return dto;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.masivian.service.RuletaService#edit(co.com.masivian.Dto.RuletaDto)
+	 */
 	@Override
 	public RuletaDto edit(RuletaDto ruletaDto) {
 		Ruleta entityFind = repository.findById(ruletaDto.getId()).orElse(null);
 		RuletaDto dto = new RuletaDto();
-		if (entityFind!=null) {
+		if (entityFind != null) {
 			entityFind.setStatus(ruletaDto.getStatus());
 			Ruleta entityDB = repository.save(entityFind);
 			dto.setId(entityDB.getId());
 			dto.setName(entityDB.getName());
 			dto.setStatus(entityDB.getStatus());
 		}
-		
+
 		return dto;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see co.com.masivian.service.RuletaService#aperturaRuleta(java.lang.Long)
+	 * 
+	 * method that allows to see the state of the roulette
+	 * 
 	 */
 	@Override
 	public String aperturaRuleta(Long id) {
 		String response = "";
 		Ruleta entityFind = repository.findById(id).orElse(null);
-		if (entityFind!=null) {
+		if (entityFind != null) {
 			entityFind.setStatus(new Short("1"));
 			Ruleta entityDB = repository.save(entityFind);
-			response = entityDB!=null && entityDB.getId()==1 ? "Activado": "Inactivo";
+			response = entityDB != null && entityDB.getId() == 1 ? "Activado" : "Inactivo";
 		}
+		
 		return response;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see co.com.masivian.service.RuletaService#cierreRuleta(java.lang.Long)
+	 * 
+	 * method to return the results of the bets from opening to closing
+	 * 
+	 * 
+	 */
 	@Override
 	public CierreDto cierreRuleta(Long id) {
 		CierreDto response = null;
 		Ruleta entityFind = repository.findById(id).orElse(null);
-		if (entityFind!=null) {
+		if (entityFind != null) {
 			response = new CierreDto();
 			response.setNombreRuleta(entityFind.getName());
 			Double totalApuesta = 0D;
@@ -108,7 +143,7 @@ public class RuletaImp implements RuletaService {
 				apu.setId(apuesta.getId());
 				apu.setValue(apuesta.getValue());
 				apu.setColor(apuesta.getColor());
-				apu.setNumero(apuesta.getNumero());
+				apu.setNumber(apuesta.getNumero());
 				apuestas.add(apu);
 				response.setApuestas(apuestas);
 			}
@@ -119,17 +154,28 @@ public class RuletaImp implements RuletaService {
 
 	@Override
 	public void delete(long id) {
-		
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see co.com.masivian.service.RuletaService#ruletaDtofindById(java.lang.Long)
+	 * 
+	 * 
+	 * Method used to search by id
+	 * 
+	 * 
+	 */
 	@Override
 	public RuletaDto ruletaDtofindById(Long id) {
 		Ruleta entityDB = repository.findById(id).orElse(null);
-		
+
 		RuletaDto dto = new RuletaDto();
 		dto.setId(entityDB.getId());
 		dto.setName(entityDB.getName());
 		dto.setStatus(entityDB.getStatus());
+		
 		return dto;
 	}
 

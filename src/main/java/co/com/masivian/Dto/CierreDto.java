@@ -1,8 +1,6 @@
 package co.com.masivian.Dto;
 
 import java.util.List;
-
-import co.com.masivian.entities.Ruleta;
 import lombok.Getter;
 import lombok.Setter;
 

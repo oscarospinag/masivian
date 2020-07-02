@@ -12,7 +12,7 @@ public class ApuestaDto {
     private Long id;
     private Double value;
     private String color;
-    private int numero;
+    private int number;
 	
     public ApuestaDto() {
 		

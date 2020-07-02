@@ -16,7 +16,9 @@ public class ApuestasImp implements ApuestaService {
 	@Autowired
 	private ApuestaRepository repository;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see co.com.masivian.service.ApuestaService#all()
 	 */
 	@Override
@@ -36,8 +38,11 @@ public class ApuestasImp implements ApuestaService {
 		return new ResponseEntity<List<ApuestaDto>>(response, HttpStatus.BAD_REQUEST);
 	}
 
-	/* (non-Javadoc)
-	 * @see co.com.masivian.service.ApuestaService#save(co.com.masivian.Dto.ApuestaDto)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.masivian.service.ApuestaService#save(co.com.masivian.Dto.ApuestaDto)
 	 * 
 	 */
 	@Override
@@ -50,13 +55,18 @@ public class ApuestasImp implements ApuestaService {
 		Apuesta entityDB = repository.save(entity);
 		if (entityDB != null) {
 			response = new ApuestaDto();
+			
 			return new ResponseEntity<ApuestaDto>(response, HttpStatus.CREATED);
 		}
+		
 		return new ResponseEntity<ApuestaDto>(response, HttpStatus.BAD_REQUEST);
 	}
 
-	/* (non-Javadoc)
-	 * @see co.com.masivian.service.ApuestaService#edit(co.com.masivian.Dto.ApuestaDto)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.masivian.service.ApuestaService#edit(co.com.masivian.Dto.ApuestaDto)
 	 */
 	@Override
 	public ResponseEntity<ApuestaDto> edit(ApuestaDto apuestaDto) {
@@ -65,11 +75,8 @@ public class ApuestasImp implements ApuestaService {
 		Apuesta entity = new Apuesta();
 		entity.setId(apuestaDto.getId());
 		entity.setValue(apuestaDto.getValue());
-		// entity.setIdRuleta(apuestaDto.getIdRuleta());
 		Apuesta entityDB = repository.save(entity);
 		if (entityDB != null) {
-			// response = new ApuestaDto(entityDB.getId(), entity.getValue(),
-			// entity.getIdRuleta());
 
 			return new ResponseEntity<ApuestaDto>(response, HttpStatus.CREATED);
 		}
@@ -77,6 +84,11 @@ public class ApuestasImp implements ApuestaService {
 		return new ResponseEntity<ApuestaDto>(response, HttpStatus.BAD_REQUEST);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see co.com.masivian.service.ApuestaService#delete(long)
+	 */
 	@Override
 	public void delete(long id) {
 		Apuesta entity = repository.findById(id).orElse(null);
@@ -85,6 +97,12 @@ public class ApuestasImp implements ApuestaService {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.masivian.service.ApuestaService#apuestaDtofindById(java.lang.Long)
+	 */
 	@Override
 	public ResponseEntity<ApuestaDto> apuestaDtofindById(Long id) {
 		ApuestaDto response = null;
@@ -93,6 +111,7 @@ public class ApuestasImp implements ApuestaService {
 			// response = new ApuestaDto(entity.getId(), entity.getValue(),
 			// entity.getIdRuleta());
 		}
+		
 		return new ResponseEntity<ApuestaDto>(response, HttpStatus.OK);
 	}
 
